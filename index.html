@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestor prestecs aula</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div>
+        <h1>Gestor prestecs aula</h1>
+        <p class="subtitle">Control d'inventari, préstecs a l'alumnat i devolucions d'equipament</p>
+      </div>
+      <dl class="stats-grid" aria-label="Resum d'estat de l'inventari">
+        <div class="stat-card">
+          <dt>Total equips</dt>
+          <dd id="stat-total">0</dd>
+        </div>
+        <div class="stat-card stat-disponible">
+          <dt>Disponibles</dt>
+          <dd id="stat-disponibles">0</dd>
+        </div>
+        <div class="stat-card stat-prestat">
+          <dt>Prestats</dt>
+          <dd id="stat-prestats">0</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+
+  <main class="container main-layout">
+    <div id="feedback-banner" class="feedback-banner" role="status" aria-live="polite" hidden></div>
+
+    <section class="forms-grid" aria-label="Accions ràpides">
+      <article class="card">
+        <h2>Donar d'alta un equip</h2>
+        <form id="form-alta-equip" novalidate>
+          <div class="field">
+            <label for="equip-codi">Codi identificador únic *</label>
+            <input
+              id="equip-codi"
+              name="codi"
+              type="text"
+              placeholder="Ex. PORT-01, HDMI-02, ARD-03"
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="field">
+            <label for="equip-nom">Nom o descripció *</label>
+            <input
+              id="equip-nom"
+              name="nom"
+              type="text"
+              placeholder="Ex. Portàtil Dell Latitude 14&quot;"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="equip-categoria">Categoria *</label>
+            <select id="equip-categoria" name="categoriaSelect" required>
+              <option value="Portàtil">Portàtil</option>
+              <option value="Cable HDMI">Cable HDMI</option>
+              <option value="Placa Arduino">Placa Arduino</option>
+              <option value="Adaptador">Adaptador</option>
+              <option value="__CUSTOM__">Altra categoria (personalitzada)...</option>
+            </select>
+          </div>
+
+          <div class="field" id="categoria-personalitzada-wrap" hidden>
+            <label for="equip-categoria-custom">Nova categoria *</label>
+            <input
+              id="equip-categoria-custom"
+              name="categoriaCustom"
+              type="text"
+              placeholder="Ex. Sensor, Tauleta gràfica"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Afegir equip</button>
+        </form>
+      </article>
+
+      <article class="card">
+        <h2>Registrar préstec</h2>
+        <form id="form-prestec" novalidate>
+          <div class="field">
+            <label for="prestec-equip">Equip disponible *</label>
+            <select id="prestec-equip" name="codiEquip" required>
+              <option value="">-- Selecciona un equip disponible --</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="prestec-alumne">Nom de l'alumne *</label>
+            <input
+              id="prestec-alumne"
+              name="nomAlumne"
+              type="text"
+              placeholder="Ex. Marta Soler Puig"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="prestec-grup">Grup / curs *</label>
+            <input
+              id="prestec-grup"
+              name="grupCurs"
+              type="text"
+              placeholder="Ex. 2n Batxillerat A"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="prestec-sortida">Data i hora de sortida *</label>
+            <input
+              id="prestec-sortida"
+              name="dataHoraSortida"
+              type="datetime-local"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Registrar préstec</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="card" aria-labelledby="titol-inventari">
+      <div class="section-header">
+        <h2 id="titol-inventari">Inventari i estat d'equips</h2>
+        <div class="filters-bar" role="group" aria-label="Filtres d'inventari">
+          <div class="filter-tabs">
+            <button type="button" class="filter-btn is-active" data-estat-filter="Tots">Tots</button>
+            <button type="button" class="filter-btn" data-estat-filter="Disponible">Disponibles</button>
+            <button type="button" class="filter-btn" data-estat-filter="Prestat">Prestats</button>
+          </div>
+          <div class="search-wrap">
+            <label for="cerca-inventari" class="sr-only">Cercar equip per codi, nom o categoria</label>
+            <input
+              id="cerca-inventari"
+              type="search"
+              placeholder="Filtra per codi, nom o categoria..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div id="inventari-contenidor" class="table-responsive"></div>
+    </section>
+
+    <section class="card" aria-labelledby="titol-historial">
+      <div class="section-header">
+        <h2 id="titol-historial">Historial de préstecs retornats</h2>
+      </div>
+      <div id="historial-contenidor" class="table-responsive"></div>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
